@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Front\CatogryPostsController;
+use App\Http\Controllers\Front\ContactUsController;
+use App\Http\Controllers\Front\SearchController;
 use Illuminate\Support\Facades\Cache;
 use App\Http\Controllers\Front\HomeController;
 use App\Http\Controllers\Front\PostController;
@@ -19,8 +21,12 @@ Route::post('/subscribe', [SubscribeController::class, 'store'])->name('subscrib
 Route::get('/catogry/{slug}', CatogryPostsController::class)->name('catogries.posts');
 Route::get('/posts/{post}', [PostController::class,'show'])->name('posts.show');
 Route::get('/posts/comments/{post}', [PostController::class,'getPostComments'])->name('posts.comments.show');
-Route::get('/posts/comments/store', [PostController::class,'storeComments'])->name('posts.comments.store');
+Route::post('/posts/comments/store', [PostController::class,'storeComments'])->name('posts.comments.store');
 
+
+Route::get('/contact-us',[ContactUsController::class,"create"])->name('contact.create');
+Route::post('/contact-us',[ContactUsController::class,"store"])->name('contact.store');
+Route::match(['get', 'post'], '/search', SearchController::class)->name('search');
 
 
 

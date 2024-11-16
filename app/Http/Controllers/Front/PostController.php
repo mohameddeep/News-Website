@@ -23,29 +23,36 @@ class PostController extends Controller
 
 
     public function getPostComments(Post $post){
-        $comments=$post->comments()->with("user")->get();
+        $comments=$post->comments()->with("user")->latest()->get();
 // return $comments;
         return response()->json($comments);
 
     }
 
     public function storeComments(Request $request){
+
+        $request->validate([
+            "comment" =>"required"
+        ]);
+
         $comment=Comment::create([
             "comment" =>$request->comment,
             "post_id" =>$request->post_id,
             "user_id" =>1,
-            "ip_address" =>$request->ip_address
+            "ip_address" =>$request->ip()
         ]);
 
         if($comment){
+            $comment->load(["user"]);
             return response()->json([
-                "data" =>$comment,
+                "comment" =>$comment,
                 "msg" =>"comment created successfully",
-            ]);
+
+            ],201);
         }
 
         return response()->json([
             "msg" =>"there is error",
-        ]);
+        ],401);
     }
 }

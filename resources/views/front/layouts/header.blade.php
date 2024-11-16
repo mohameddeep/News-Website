@@ -54,7 +54,7 @@
               <a href="">About</a>
               <a href="">Privacy</a>
               <a href="">Terms</a>
-              <a href="">Contact</a>
+              <a href="{{ route('contact.create') }}">Contact</a>
             </div>
           </div>
         </div>
@@ -81,10 +81,14 @@
             </div>
           </div>
           <div class="col-lg-3 col-md-4">
+            <form action="{{ route('search') }}" method="post">
+                @csrf
+
             <div class="b-search">
-              <input type="text" placeholder="Search" />
-              <button><i class="fa fa-search"></i></button>
+              <input type="text" name="search" placeholder="Search" />
+              <button type="submit"><i class="fa fa-search"></i></button>
             </div>
+        </form>
           </div>
         </div>
       </div>
@@ -129,7 +133,7 @@
                 >Single Page</a
               >
               <a href="dashboard.html" class="nav-item nav-link">Dashboard</a>
-              <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+              <a href="{{ route('contact.create') }}" class="nav-item nav-link">Contact Us</a>
             </div>
             <div class="social ml-auto">
               <a href="{{ $setting->twitter }}"><i class="fab fa-twitter"></i></a>

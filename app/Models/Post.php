@@ -23,4 +23,10 @@ protected $guarded=[];
     public function images(){
         return $this->hasMany(Image::class);
     }
+
+
+    //local scope
+    public function scopeActive($query){
+        $query->where("status",1);
+    }
 }

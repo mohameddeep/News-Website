@@ -63,13 +63,17 @@
               <form id="addComment">
                 @csrf
               <div class="comment-input">
-                <input type="text" placeholder="Add a comment..." name="title" id="commentBox" />
+                <input type="text" placeholder="Add a comment..." name="comment" id="commentInput" />
                 <input type="hidden" name="user_id" value="1">
                 <input type="hidden" name="post_id" value="{{ $post->id }}">
                 <button id="addCommentBtn" type="submit">Post</button>
               </div>
             </form>
               <!-- Display Comments -->
+
+              <div style="display: none" class="alert alert-danger" id="showerror">
+
+              </div>
               <div class="comments">
                 @foreach ($post->comments as $comment)
                 <div class="comment">
@@ -252,7 +256,40 @@ $('#showMoreBtn').hide();
 })
 $(document).on('submit',"#addComment",function(e){
     e.preventDefault()
-    alert("hi");
+   var form=new FormData($(this)[0])
+
+   $("#commentInput").val('')
+
+   $.ajax({
+    url: "{{ route('posts.comments.store') }}",
+    type: "post",
+    data: form,
+    processData:false,
+    contentType:false,
+
+    success: function(data){
+        $("#showerror").hide()
+
+        $(".comments").prepend(`
+         <div class="comment">
+                    <img src="${data.comment.user.image }" alt="User Image" class="comment-img" />
+                    <div class="comment-content">
+                      <span class="username">${data.comment.user.name }</span>
+                      <p class="comment-text">${data.comment.comment }</p>
+                    </div>
+                  </div>
+
+        `)
+
+    },
+    error: function(data){
+        var response=$.parseJSON(data.responseText)
+        $("#showerror").text(response.errors.comment).show()
+
+    }
+
+
+   })
 })
 
 </script>

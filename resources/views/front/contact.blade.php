@@ -1,16 +1,12 @@
 @extends('front.layouts.app')
-
+@section('breadcrumb')
+@parent
+<li class="breadcrumb-item active">Contact</li>
+@endsection
 
 @section('content')
  <!-- Breadcrumb Start -->
- <div class="breadcrumb-wrap">
-    <div class="container">
-      <ul class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Home</a></li>
-        <li class="breadcrumb-item active">Contact</li>
-      </ul>
-    </div>
-  </div>
+
   <!-- Breadcrumb End -->
 
   <!-- Contact Start -->
@@ -19,11 +15,13 @@
       <div class="row align-items-center">
         <div class="col-md-8">
           <div class="contact-form">
-            <form>
+            <form method="post" action="{{ route('contact.store') }}">
+                @csrf
               <div class="form-row">
                 <div class="form-group col-md-6">
                   <input
                     type="text"
+                    name="name"
                     class="form-control"
                     placeholder="Your Name"
                   />
@@ -31,6 +29,7 @@
                 <div class="form-group col-md-6">
                   <input
                     type="email"
+                    name="email"
                     class="form-control"
                     placeholder="Your Email"
                   />
@@ -39,6 +38,15 @@
               <div class="form-group">
                 <input
                   type="text"
+                  name="phone"
+                  class="form-control"
+                  placeholder="phone"
+                />
+              </div>
+              <div class="form-group">
+                <input
+                  type="text"
+                  name="title"
                   class="form-control"
                   placeholder="Subject"
                 />
@@ -47,6 +55,7 @@
                 <textarea
                   class="form-control"
                   rows="5"
+                  name="body"
                   placeholder="Message"
                 ></textarea>
               </div>
@@ -65,15 +74,17 @@
               and paste the files, add a little code and you're done.
               <a href="https://htmlcodex.com/contact-form">Download Now</a>.
             </p>
-            <h4><i class="fa fa-map-marker"></i>123 News Street, NY, USA</h4>
-            <h4><i class="fa fa-envelope"></i>info@example.com</h4>
-            <h4><i class="fa fa-phone"></i>+123-456-7890</h4>
+            <h4><i class="fa fa-map-marker"></i>{{ $setting->location }}</h4>
+            <h4><i class="fa fa-envelope"></i>{{ $setting->email }}</h4>
+            <h4><i class="fa fa-phone"></i>{{ $setting->phone }}</h4>
             <div class="social">
-              <a href=""><i class="fab fa-twitter"></i></a>
-              <a href=""><i class="fab fa-facebook-f"></i></a>
-              <a href=""><i class="fab fa-linkedin-in"></i></a>
-              <a href=""><i class="fab fa-instagram"></i></a>
-              <a href=""><i class="fab fa-youtube"></i></a>
+
+                    <a href="{{ $setting->twitter }}"><i class="fab fa-twitter"></i></a>
+                    <a href="{{ $setting->fecabook }}"><i class="fab fa-facebook-f"></i></a>
+                    <a href=""><i class="fab fa-linkedin-in"></i></a>
+                    <a href="{{ $setting->instgram }}"><i class="fab fa-instagram"></i></a>
+                    <a href="{{ $setting->yotube }}"><i class="fab fa-youtube"></i></a>
+
             </div>
           </div>
         </div>
