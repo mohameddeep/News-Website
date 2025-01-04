@@ -51,10 +51,20 @@
           </div>
           <div class="col-md-6">
             <div class="tb-menu">
-              <a href="">About</a>
-              <a href="">Privacy</a>
-              <a href="">Terms</a>
-              <a href="{{ route('contact.create') }}">Contact</a>
+                @guest
+                <a href="{{ route('register') }}">Register</a>
+                <a href="{{ route('login') }}">Login</a>
+                @endguest
+
+                @auth
+                <a href="javascript::void(0)" onclick="if(confirm('do you want to logout?')){
+                document.getElementById('logoutform').submit()} return false">Logout</a>
+                @endauth
+
+                <form id="logoutform" action="{{ route('logout') }}" method="POST">
+                    @csrf
+                </form>
+              {{-- <a href="{{ route('contact.create') }}">Contact</a> --}}
             </div>
           </div>
         </div>

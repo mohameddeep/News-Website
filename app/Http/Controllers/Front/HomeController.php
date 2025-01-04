@@ -12,7 +12,7 @@ class HomeController extends Controller
 {
     public function index(){
         $posts=Post::with("images")->latest()->paginate(9);
-        $mostReadPost=Post::with('images')->orderBy("read_numbers","desc")->take(3)->get();
+        $mostReadPost=Post::with('images')->take(3)->get();
         $oldestPost=Post::with('images')->oldest()->take(3)->get();
         $popularPost=Post::withCount('comments')
         ->orderBy("comments_count","desc")->take(3)->get();

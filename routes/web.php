@@ -37,8 +37,3 @@ Route::match(['get', 'post'], '/search', SearchController::class)->name('search'
 
 // dd($value);
 // });
-<<<<<<< HEAD
-//welcome
-=======
-// testing
->>>>>>> test
